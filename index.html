@@ -82,8 +82,8 @@
   <body>
 
     <button onclick="toggle()" type="button">Peak</button>
-    <button onclick="previous()" type="button">Previous</button>
-    <button onclick="next()" type="button">Next</button>
+    <button onclick="decrementSlides()" type="button">Previous</button>
+    <button onclick="incrementSlides()" type="button">Next</button>
 
     <div class="peak">
       <div class="slides">
@@ -149,20 +149,19 @@
 
       var Slides = {}
 
-      var updateSlides = function() {
-        Slides.slides = document.querySelector('.peak .slides').children;
-        Slides.count = Slides.slides.length;
-        Slides.previous = document.querySelector('.peak .slides .previous');
-        Slides.current = document.querySelector('.peak .slides .current');
-        Slides.next = document.querySelector('.peak .slides .next');
-      }
+      Slides.slides = document.querySelector('.peak .slides').children;
+      Slides.count = Slides.slides.length;
+      Slides.previous = 1;
+      Slides.current = 2;
+      Slides.next = 3;
 
-      updateSlides()
 
-      // Add indexes to slides
-      for (var i = 0; i < Slides.count; i++) {
-        var slide = Slides.slides[i];
-        slide.dataset.index = i;
+      var indexSlides = function() {
+        // Add indexes to slides
+        for (var i = 0; i < Slides.count; i++) {
+          var slide = Slides.slides[i];
+          slide.dataset.index = i + 1;
+        }
       }
 
       var toggle = function() {
@@ -172,24 +171,22 @@
         else removeClass(peak, 'visible');
       }
 
-      var next = function() {
-        removeClass(Slides.current, 'current');
-        appendClass(Slides.current, 'previous');
-        removeClass(Slides.next, 'next');
-        appendClass(Slides.next, 'current');
-        Slides.previous = Slides.current;
-        Slides.current = Slides.next;
-        console.log(Slides);
+      var incrementSlides = function() {
+        // Add one to slide order, largest value is n slides + 1
+        if (Slides.next < Slides.count + 1) {
+          Slides.previous += 1;
+          Slides.current += 1;
+          Slides.next += 1;
+        }
       }
 
-      var previous = function() {
-        removeClass(Slides.current, 'current');
-        appendClass(Slides.current, 'next');
-        removeClass(Slides.previous, 'previous');
-        appendClass(Slides.previous, 'current');
-        Slides.next = Slides.current;
-        Slides.current = Slides.previous;
-        console.log(Slides);
+      var decrementSlides = function() {
+        // Remove one from slide order, smallest value is 0
+        if (Slides.previous > 0) {
+          Slides.previous -= 1;
+          Slides.current -= 1;
+          Slides.next -= 1;
+        }
       }
 
     </script>
