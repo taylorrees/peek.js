@@ -88,7 +88,7 @@
     <div class="peak">
       <div class="slides">
 
-        <section class="previous">
+        <section>
           <article>
 
             <h1>Previous</h1>
@@ -99,7 +99,28 @@
           </article>
         </section>
 
-        <section class="current">
+        <section>
+          <article>
+
+            <h1>Previous</h1>
+            <p>
+              You'd place some really handy information that would help your users in here.
+            </p>
+
+          </article>
+        </section>
+        <section>
+          <article>
+
+            <h1>Previous</h1>
+            <p>
+              You'd place some really handy information that would help your users in here.
+            </p>
+
+          </article>
+        </section>
+
+        <section>
           <article>
 
             <h1>Current</h1>
@@ -110,7 +131,7 @@
           </article>
         </section>
 
-        <section class="next">
+        <section>
           <article>
 
             <h1>Next</h1>
@@ -127,21 +148,15 @@
     <script type="text/javascript">
 
       var appendClass = function(s, c) {
-        /*
-        Accepts two strings: s and c.
-        The function appends the class 'c' to the source 's'
-        with a preceding space.
-        */
+        // Accepts two strings: s and c.
+        // The function appends the class 'c' to the source 's'
 
         return s.className += ' ' + c;
       }
 
       var removeClass = function(s, c) {
-        /*
-        Accepts two strings: s and c.
-        The function removes the class 'c' from the source 's'
-        removing a preceding space.
-        */
+        // Accepts two strings: s and c.
+        // The function removes the class 'c' from the source 's'
 
         return s.className = s.className.replace(c, '').trim();
       }
@@ -188,6 +203,19 @@
           Slides.next -= 1;
         }
       }
+
+      var setSlideLocations = function() {
+        // Position slides within the peak drawer
+        for (var i = 0; i < Slides.count; i++) {
+          var slide = Slides.slides[i];
+          if (slide.dataset.index < Slides.current) appendClass(slide, 'previous');
+          else if (slide.dataset.index > Slides.current) appendClass(slide, 'next');
+          else appendClass(slide, 'current');
+        }
+      }
+
+      indexSlides();
+      setSlideLocations();
 
     </script>
 
