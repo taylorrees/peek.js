@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Peak Example</title>
+
+    <style>
+
+      .peak div,
+      .peak section,
+      .peak article,
+      .peak h1,
+      .peak h2,
+      .peak h3,
+      .peak h4,
+      .peak h5,
+      .peak h6,
+      .peak p,
+      .peak img {
+        margin: 0px;
+        padding: 0px;
+      }
+
+
+      .peak {
+        position: fixed;
+        width: 100%;
+        transition: 0.3s all;
+        /* <defaults> */
+        bottom: -100%;
+        height: 45%;
+        left: 0px;
+        border-top: 1px solid rgb(0,0,0);
+        /* </defaults> */
+      }
+
+      .peak.visible {
+        bottom: 0%;
+      }
+
+      .peak .slides {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+      }
+
+      .peak section {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transition: 0.3s all;
+        background: rgb(255,255,255);
+      }
+
+      .peak section.previous {
+        left: -100%;
+      }
+
+      .peak section.current {
+        left: 0%;
+        z-index: 10;
+      }
+
+      .peak section.next {
+        left: 100%;
+      }
+
+      .peak section article {
+        padding: 20px;
+        /* <vertical align> */
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        /* </vertical align> */
+      }
+
+    </style>
+
+  </head>
+  <body>
+
+    <button onclick="toggle()" type="button">Peak</button>
+    <button onclick="previous()" type="button">Previous</button>
+    <button onclick="next()" type="button">Next</button>
+
+    <div class="peak">
+      <div class="slides">
+
+        <section class="previous">
+          <article>
+
+            <h1>Previous</h1>
+            <p>
+              You'd place some really handy information that would help your users in here.
+            </p>
+
+          </article>
+        </section>
+
+        <section class="current">
+          <article>
+
+            <h1>Current</h1>
+            <p>
+              You'd place some really handy information that would help your users in here.
+            </p>
+
+          </article>
+        </section>
+
+        <section class="next">
+          <article>
+
+            <h1>Next</h1>
+            <p>
+              You'd place some really handy information that would help your users in here.
+            </p>
+
+          </article>
+        </section>
+
+      </div>
+    </div>
+
+    <script type="text/javascript">
+
+      var appendClass = function(s, c) {
+        /*
+        Accepts two strings: s and c.
+        The function appends the class 'c' to the source 's'
+        with a preceding space.
+        */
+
+        return s.className += ' ' + c;
+      }
+
+      var removeClass = function(s, c) {
+        /*
+        Accepts two strings: s and c.
+        The function removes the class 'c' from the source 's'
+        removing a preceding space.
+        */
+
+        return s.className = s.className.replace(c, '').trim();
+      }
+
+
+      var Slides = {}
+
+      var updateSlides = function() {
+        Slides.slides = document.querySelector('.peak .slides').children;
+        Slides.count = Slides.slides.length;
+        Slides.previous = document.querySelector('.peak .slides .previous');
+        Slides.current = document.querySelector('.peak .slides .current');
+        Slides.next = document.querySelector('.peak .slides .next');
+      }
+
+      updateSlides()
+
+      // Add indexes to slides
+      for (var i = 0; i < Slides.count; i++) {
+        var slide = Slides.slides[i];
+        slide.dataset.index = i;
+      }
+
+      var toggle = function() {
+        // Toggles the state of the peak drawer (open / closed)
+        var peak = document.querySelector('.peak');
+        if (peak.className == 'peak') appendClass(peak, 'visible');
+        else removeClass(peak, 'visible');
+      }
+
+      var next = function() {
+        removeClass(Slides.current, 'current');
+        appendClass(Slides.current, 'previous');
+        removeClass(Slides.next, 'next');
+        appendClass(Slides.next, 'current');
+        Slides.previous = Slides.current;
+        Slides.current = Slides.next;
+        console.log(Slides);
+      }
+
+      var previous = function() {
+        removeClass(Slides.current, 'current');
+        appendClass(Slides.current, 'next');
+        removeClass(Slides.previous, 'previous');
+        appendClass(Slides.previous, 'current');
+        Slides.next = Slides.current;
+        Slides.current = Slides.previous;
+        console.log(Slides);
+      }
+
+    </script>
+
+  </body>
+</html>
