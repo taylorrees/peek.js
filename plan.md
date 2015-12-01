@@ -112,7 +112,6 @@ Key    | Action
 ---    | ---
 &larr; | Previous
 &rarr; | Next
-&uarr; | Previous
-&darr; | Next
+&darr; | Close
 Spacebar | Next
 Esc    | Close
