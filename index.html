@@ -193,12 +193,6 @@
       </div>
       <!-- </slides> -->
 
-      <!-- <progress> -->
-      <div class="progress">
-        <span data-progress=""></span>
-      </div>
-      <!-- </progress> -->
-
     </div>
 
     <script type="text/javascript">
@@ -251,7 +245,7 @@
       }
 
       var setSlideLocations = function(slides) {
-        // Position slides within the peak drawer
+        // Position slides within the peak drawer.
         for (var i = 0; i < slides.count; i++) {
           var slide = slides.list[i];
           if (slide.dataset.index < slides.current) setSlideLocation(slide, 'left');
@@ -285,6 +279,17 @@
           }
         };
       };
+
+      var injectProgressBar = function() {
+        // Add the progress bar to peak drawer.
+        // Injects: <div class="progress"><span></span></div>
+        var peak = document.querySelector('.peak');
+        var progress = document.createElement('div');
+        var progressBar = document.createElement('span');
+        progress.className = 'progress';
+        progress.appendChild(progressBar);
+        peak.appendChild(progress);
+      }
 
       // NEEDS IMPROVEMENT
       var toggleControls = function() {
@@ -341,6 +346,7 @@
         // Starts Peak.
         indexSlides(Peak.slides);
         setSlideLocations(Peak.slides);
+        injectProgressBar();
         showProgress(Peak.slides);
         bindClickableKeys();
       };
