@@ -82,7 +82,7 @@
 
       .peak-controls {
         position: fixed;
-        font-size: 11px;
+        font-size: 12px;
         font-family: 'Merriweather', serif;
         bottom: 15px;
         right: 15px;
@@ -101,6 +101,7 @@
       .peak-controls a {
         cursor: pointer;
         padding: 2px 6px;
+        transition: 0.2s all;
       }
 
       .peak-controls a:first-of-type {
@@ -116,6 +117,28 @@
       }
 
       /* </peak controls> */
+
+      /* <progress> */
+
+      .peak .progress {
+        position: absolute;
+        bottom: 0px;
+        z-index: 10;
+        width: 100%;
+        background: rgb(220,220,220);
+      }
+
+      .peak .progress span {
+        display: block;
+        background: rgb(26,188,156);
+        height: 4px;
+        transition: 0.2s all;
+        /* <defaults> */
+        width: 0%;
+        /* </defaults> */
+      }
+
+      /* </progress> */
 
     </style>
 
@@ -169,6 +192,13 @@
 
       </div>
       <!-- </slides> -->
+
+      <!-- <progress> -->
+      <div class="progress">
+        <span data-progress=""></span>
+      </div>
+      <!-- </progress> -->
+
     </div>
 
     <script type="text/javascript">
@@ -230,6 +260,13 @@
         }
       }
 
+      var showProgress = function(slides) {
+        // Sets the width of the progress bar.
+        var progress = document.querySelector('.peak .progress span');
+        var percentage = ((slides.current - 1) / (slides.count- 1) ) * 100;
+        progress.style.width = percentage + '%';
+      }
+
       var isPeakActive = function() {
         // Checks whether the peak drawer is open.
         var peak = document.querySelector('.peak');
@@ -240,10 +277,11 @@
       var bindClickableKeys = function() {
         // Binds clickable keys with actions.
         document.onkeydown = function(e) {
+          if (e.ctrlKey && e.shiftKey && e.keyCode == '191') Peak.toggle(); // Ctrl + ?
           if (isPeakActive() == true) {
-            if (e.keyCode == '40' || e.keyCode == '27') Peak.toggle();
-            if (e.keyCode == '37') Peak.previous();
-            if (e.keyCode == '39' || e.keyCode == '32') Peak.next();
+            if (e.keyCode == '40' || e.keyCode == '27') Peak.toggle(); // down arrow or Esc
+            if (e.keyCode == '37') Peak.previous(); // left arrow
+            if (e.keyCode == '39' || e.keyCode == '32') Peak.next(); // right arrow
           }
         };
       };
@@ -256,14 +294,15 @@
 
         // Check when drawer is closed
         if (isPeakActive() == false) {
+          // On click, when drawer closed -> draw will open -> show controls
           previous.style.display = 'inline';
           next.style.display = 'inline';
         } else {
+          // On click, when drawer open -> draw will close -> hide controls
           previous.style.display = 'none';
           next.style.display = 'none';
         }
       };
-
 
       // Implementation
 
@@ -288,18 +327,21 @@
         // Moves to and displays the next slide.
         incrementSlides(Peak.slides);
         setSlideLocations(Peak.slides);
+        showProgress(Peak.slides);
       };
 
       Peak.previous = function() {
         // Moves to and displays the previous slide.
         decrementSlides(Peak.slides);
         setSlideLocations(Peak.slides);
+        showProgress(Peak.slides);
       };
 
       Peak.init = function() {
         // Starts Peak.
         indexSlides(Peak.slides);
         setSlideLocations(Peak.slides);
+        showProgress(Peak.slides);
         bindClickableKeys();
       };
 
