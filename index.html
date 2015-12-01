@@ -81,9 +81,9 @@
   </head>
   <body>
 
-    <button onclick="toggle()" type="button">Peak</button>
-    <button onclick="previous()" type="button">Previous</button>
-    <button onclick="next()" type="button">Next</button>
+    <button onclick="Peak.toggle()" type="button">Peak</button>
+    <button onclick="Peak.previous()" type="button">Previous</button>
+    <button onclick="Peak.next()" type="button">Next</button>
 
     <div class="peak">
       <div class="slides">
@@ -147,6 +147,8 @@
 
     <script type="text/javascript">
 
+      // Library
+
       var appendClass = function(s, c) {
         // Accepts two strings: s and c.
         // The function appends the class 'c' to the source 's'
@@ -161,44 +163,29 @@
         return s.className = s.className.replace(c, '').trim();
       }
 
-      var Slides = {}
-
-      Slides.slides = document.querySelector('.peak .slides').children;
-      Slides.count = Slides.slides.length;
-      Slides.previous = 1;
-      Slides.current = 2;
-      Slides.next = 3;
-
-      var toggle = function() {
-        // Toggles the state of the peak drawer (open / closed)
-        var peak = document.querySelector('.peak');
-        if (peak.className == 'peak') appendClass(peak, 'visible');
-        else removeClass(peak, 'visible');
-      }
-
-      var indexSlides = function() {
+      var indexSlides = function(slides) {
         // Add indexes to slides
-        for (var i = 0; i < Slides.count; i++) {
-          var slide = Slides.slides[i];
+        for (var i = 0; i < slides.count; i++) {
+          var slide = slides.list[i];
           slide.dataset.index = i + 1;
         }
       }
 
-      var incrementSlides = function() {
+      var incrementSlides = function(slides) {
         // Add one to slide order, largest value is n slides + 1
-        if (Slides.next < Slides.count + 1) {
-          Slides.previous += 1;
-          Slides.current += 1;
-          Slides.next += 1;
+        if (slides.next < slides.count + 1) {
+          slides.previous += 1;
+          slides.current += 1;
+          slides.next += 1;
         }
       }
 
-      var decrementSlides = function() {
+      var decrementSlides = function(slides) {
         // Remove one from slide order, smallest value is 0
-        if (Slides.previous > 0) {
-          Slides.previous -= 1;
-          Slides.current -= 1;
-          Slides.next -= 1;
+        if (slides.previous > 0) {
+          slides.previous -= 1;
+          slides.current -= 1;
+          slides.next -= 1;
         }
       }
 
@@ -207,32 +194,50 @@
         return slide.dataset.location = location;
       }
 
-      var setSlideLocations = function() {
+      var setSlideLocations = function(slides) {
         // Position slides within the peak drawer
-        for (var i = 0; i < Slides.count; i++) {
-          var slide = Slides.slides[i];
-          if (slide.dataset.index < Slides.current) setSlideLocation(slide, 'left');
-          else if (slide.dataset.index > Slides.current) setSlideLocation(slide, 'right');
+        for (var i = 0; i < slides.count; i++) {
+          var slide = slides.list[i];
+          if (slide.dataset.index < slides.current) setSlideLocation(slide, 'left');
+          else if (slide.dataset.index > slides.current) setSlideLocation(slide, 'right');
           else setSlideLocation(slide, 'current');
         }
       }
 
-      var next = function() {
-        incrementSlides();
-        setSlideLocations();
-      }
+      // Implementation
 
-      var previous = function() {
-        decrementSlides();
-        setSlideLocations();
-      }
+      var Peak = {};
 
-      var init = function() {
-        indexSlides();
-        setSlideLocations();
-      }
+      Peak.slides = {};
+      Peak.slides.list = document.querySelector('.peak .slides').children;
+      Peak.slides.count = Peak.slides.list.length;
+      Peak.slides.previous = 1;
+      Peak.slides.current = 2;
+      Peak.slides.next = 3;
 
-      init();
+      Peak.toggle = function() {
+        // Toggles the state of the peak drawer (open / closed)
+        var peak = document.querySelector('.peak');
+        if (peak.className == 'peak') appendClass(peak, 'visible');
+        else removeClass(peak, 'visible');
+      };
+
+      Peak.next = function() {
+        incrementSlides(Peak.slides);
+        setSlideLocations(Peak.slides);
+      };
+
+      Peak.previous = function() {
+        decrementSlides(Peak.slides);
+        setSlideLocations(Peak.slides);
+      };
+
+      Peak.init = function() {
+        indexSlides(Peak.slides);
+        setSlideLocations(Peak.slides);
+      };
+
+      Peak.init();
 
     </script>
 
