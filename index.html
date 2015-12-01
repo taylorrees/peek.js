@@ -54,16 +54,16 @@
         background: rgb(255,255,255);
       }
 
-      .peak section.previous {
+      .peak section[data-location='left'] {
         left: -100%;
       }
 
-      .peak section.current {
+      .peak section[data-location='current']{
         left: 0%;
         z-index: 10;
       }
 
-      .peak section.next {
+      .peak section[data-location='right'] {
         left: 100%;
       }
 
@@ -82,8 +82,8 @@
   <body>
 
     <button onclick="toggle()" type="button">Peak</button>
-    <button onclick="decrementSlides()" type="button">Previous</button>
-    <button onclick="incrementSlides()" type="button">Next</button>
+    <button onclick="previous()" type="button">Previous</button>
+    <button onclick="next()" type="button">Next</button>
 
     <div class="peak">
       <div class="slides">
@@ -161,7 +161,6 @@
         return s.className = s.className.replace(c, '').trim();
       }
 
-
       var Slides = {}
 
       Slides.slides = document.querySelector('.peak .slides').children;
@@ -170,6 +169,12 @@
       Slides.current = 2;
       Slides.next = 3;
 
+      var toggle = function() {
+        // Toggles the state of the peak drawer (open / closed)
+        var peak = document.querySelector('.peak');
+        if (peak.className == 'peak') appendClass(peak, 'visible');
+        else removeClass(peak, 'visible');
+      }
 
       var indexSlides = function() {
         // Add indexes to slides
@@ -177,13 +182,6 @@
           var slide = Slides.slides[i];
           slide.dataset.index = i + 1;
         }
-      }
-
-      var toggle = function() {
-        // Toggles the state of the peak drawer (open / closed)
-        var peak = document.querySelector('.peak');
-        if (peak.className == 'peak') appendClass(peak, 'visible');
-        else removeClass(peak, 'visible');
       }
 
       var incrementSlides = function() {
@@ -204,18 +202,37 @@
         }
       }
 
+      var setSlideLocation = function(slide, location) {
+        // Accepts two strings: slide and location.
+        return slide.dataset.location = location;
+      }
+
       var setSlideLocations = function() {
         // Position slides within the peak drawer
         for (var i = 0; i < Slides.count; i++) {
           var slide = Slides.slides[i];
-          if (slide.dataset.index < Slides.current) appendClass(slide, 'previous');
-          else if (slide.dataset.index > Slides.current) appendClass(slide, 'next');
-          else appendClass(slide, 'current');
+          if (slide.dataset.index < Slides.current) setSlideLocation(slide, 'left');
+          else if (slide.dataset.index > Slides.current) setSlideLocation(slide, 'right');
+          else setSlideLocation(slide, 'current');
         }
       }
 
-      indexSlides();
-      setSlideLocations();
+      var next = function() {
+        incrementSlides();
+        setSlideLocations();
+      }
+
+      var previous = function() {
+        decrementSlides();
+        setSlideLocations();
+      }
+
+      var init = function() {
+        indexSlides();
+        setSlideLocations();
+      }
+
+      init();
 
     </script>
 
