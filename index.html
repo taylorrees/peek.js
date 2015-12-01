@@ -24,10 +24,10 @@
 
       .peak {
         position: fixed;
+        /* Place on top of everything */
         z-index: 1000000;
         width: 100%;
         transition: 0.3s all;
-        /* Place on top of everything */
         /* <defaults> */
         bottom: -100%;
         height: 45%;
@@ -38,11 +38,6 @@
 
       .peak.visible {
         bottom: 0%;
-      }
-
-      .peak .controls {
-        position: absolute;
-        z-index: 10;
       }
 
       .peak .slides {
@@ -83,14 +78,59 @@
         /* </vertical align> */
       }
 
+      /* <peak controls> */
+
+      .peak-controls {
+        position: fixed;
+        font-size: 11px;
+        font-family: 'Merriweather', serif;
+        bottom: 15px;
+        right: 15px;
+        background: rgb(255,255,255);
+        border: 1px solid rgb(0,0,0);
+        border-radius: 40px;
+        padding: 2px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        /* Place on top of everything */
+        z-index: 10000000;
+      }
+
+      .peak-controls a {
+        cursor: pointer;
+        padding: 2px 6px;
+      }
+
+      .peak-controls a:first-of-type {
+        display: none;
+        border-right: 1px solid rgb(0,0,0);
+        padding-right: 5px;
+      }
+
+      .peak-controls a:last-of-type {
+        display: none;
+        border-left: 1px solid rgb(0,0,0);
+        padding-left: 5px;
+      }
+
+      /* </peak controls> */
+
     </style>
 
   </head>
   <body>
 
-    <button onclick="Peak.toggle()" type="button">Peak</button>
+    <!-- controls -->
+    <div class="peak-controls">
+      <a onclick="Peak.previous()">&larr;</a>
+      <a onclick="Peak.toggle()">Peak</a>
+      <a onclick="Peak.next()">&rarr;</a>
+    </div>
+    <!-- </controls> -->
 
-    <div class="peak visible">
+    <div class="peak">
       <!-- <slides> -->
       <div class="slides">
 
@@ -129,12 +169,6 @@
 
       </div>
       <!-- </slides> -->
-      <!-- controls -->
-      <div class="controls">
-        <button onclick="Peak.previous()" type="button">Previous</button>
-        <button onclick="Peak.next()" type="button">Next</button>
-      </div>
-      <!-- </controls> -->
     </div>
 
     <script type="text/javascript">
@@ -204,7 +238,7 @@
       };
 
       var bindClickableKeys = function() {
-        // Binds clickable keys with actions
+        // Binds clickable keys with actions.
         document.onkeydown = function(e) {
           if (isPeakActive() == true) {
             if (e.keyCode == '40' || e.keyCode == '27') Peak.toggle();
@@ -214,6 +248,23 @@
         };
       };
 
+      // NEEDS IMPROVEMENT
+      var toggleControls = function() {
+        // Shows the peak navigation if the drawer is open.
+        var previous = document.querySelector('.peak-controls a:first-of-type');
+        var next = document.querySelector('.peak-controls a:last-of-type');
+
+        // Check when drawer is closed
+        if (isPeakActive() == false) {
+          previous.style.display = 'inline';
+          next.style.display = 'inline';
+        } else {
+          previous.style.display = 'none';
+          next.style.display = 'none';
+        }
+      };
+
+
       // Implementation
 
       var Peak = {};
@@ -221,12 +272,13 @@
       Peak.slides = {};
       Peak.slides.list = document.querySelector('.peak .slides').children;
       Peak.slides.count = Peak.slides.list.length;
-      Peak.slides.previous = 1;
-      Peak.slides.current = 2;
-      Peak.slides.next = 3;
+      Peak.slides.previous  = 0;
+      Peak.slides.current   = 1;
+      Peak.slides.next      = 2;
 
       Peak.toggle = function() {
         // Toggles the state of the peak drawer (open / closed)
+        toggleControls();
         var peak = document.querySelector('.peak');
         if (peak.className == 'peak') appendClass(peak, 'visible');
         else removeClass(peak, 'visible');
