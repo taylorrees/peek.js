@@ -53,7 +53,12 @@
         width: 100%;
         height: 100%;
         transition: 0.3s all;
+        /* <defaults> */
         background: rgb(255,255,255);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        /* </defaults> */
       }
 
       .peek section[data-location='left'] {
@@ -157,7 +162,7 @@
       <!-- <slides> -->
       <div class="slides">
 
-        <section>
+        <section data-background="https://images.unsplash.com/photo-1440635592348-167b1b30296f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=370477211fd6605e597e0d1e9534d99e">
           <article>
 
             <h1>Previous</h1>
@@ -168,7 +173,7 @@
           </article>
         </section>
 
-        <section>
+        <section data-background="https://images.unsplash.com/photo-1444927714506-8492d94b4e3d?crop=entropy&dpr=2&fit=crop&fm=jpg&h=625&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=950">
           <article>
 
             <h1>Current</h1>
@@ -289,25 +294,36 @@
         progress.className = 'progress';
         progress.appendChild(progressBar);
         peek.appendChild(progress);
-      }
+      };
 
-      // NEEDS IMPROVEMENT
       var toggleControls = function() {
-        // Shows the peek navigation if the drawer is open.
-        var previous = document.querySelector('.peek-controls a:first-of-type');
-        var next = document.querySelector('.peek-controls a:last-of-type');
-
+        // Shows peek navigation buttons when drawer is open.
+        var previousButton = document.querySelector('.peek-controls a:first-of-type');
+        var nextButton = document.querySelector('.peek-controls a:last-of-type');
         // Check when drawer is closed
         if (isPeekActive() == false) {
           // On click, when drawer closed -> draw will open -> show controls
-          previous.style.display = 'inline';
-          next.style.display = 'inline';
+          previousButton.style.display = 'inline';
+          nextButton.style.display = 'inline';
         } else {
           // On click, when drawer open -> draw will close -> hide controls
-          previous.style.display = 'none';
-          next.style.display = 'none';
+          previousButton.style.display = 'none';
+          nextButton.style.display = 'none';
         }
       };
+
+      var setSlideBackground = function(slide, url) {
+        // Sets the background image of the slide.
+        if (url) slide.style.backgroundImage = "url('" + url + "')";
+      }
+
+      var setBackgrounds = function(slides) {
+        // Sets the background image of slides with data-background attribute.
+        for (var i = 0; i < slides.count; i++) {
+          var slide = slides.list[i];
+          setSlideBackground(slide, slide.dataset.background);
+        }
+      }
 
       // Implementation
 
@@ -342,18 +358,19 @@
         showProgress(Peek.slides);
       };
 
-      Peek.init = function() {
+      Peek.initialize = function(options) {
         // Starts Peek.
         indexSlides(Peek.slides);
         setSlideLocations(Peek.slides);
         injectProgressBar();
         showProgress(Peek.slides);
         bindClickableKeys();
+        setBackgrounds(Peek.slides);
       };
 
       // Initilization
 
-      Peek.init();
+      Peek.initialize();
 
     </script>
 
