@@ -2,27 +2,27 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Peak Example</title>
+    <title>Peek Example</title>
 
     <style>
 
-      .peak div,
-      .peak section,
-      .peak article,
-      .peak h1,
-      .peak h2,
-      .peak h3,
-      .peak h4,
-      .peak h5,
-      .peak h6,
-      .peak p,
-      .peak img {
+      .peek div,
+      .peek section,
+      .peek article,
+      .peek h1,
+      .peek h2,
+      .peek h3,
+      .peek h4,
+      .peek h5,
+      .peek h6,
+      .peek p,
+      .peek img {
         margin: 0px;
         padding: 0px;
       }
 
 
-      .peak {
+      .peek {
         position: fixed;
         /* Place on top of everything */
         z-index: 1000000;
@@ -36,11 +36,11 @@
         /* </defaults> */
       }
 
-      .peak.visible {
+      .peek.visible {
         bottom: 0%;
       }
 
-      .peak .slides {
+      .peek .slides {
         position: absolute;
         top: 0px;
         left: 0px;
@@ -48,7 +48,7 @@
         height: 100%;
       }
 
-      .peak section {
+      .peek section {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -56,20 +56,20 @@
         background: rgb(255,255,255);
       }
 
-      .peak section[data-location='left'] {
+      .peek section[data-location='left'] {
         left: -100%;
       }
 
-      .peak section[data-location='current']{
+      .peek section[data-location='current']{
         left: 0%;
         z-index: 10;
       }
 
-      .peak section[data-location='right'] {
+      .peek section[data-location='right'] {
         left: 100%;
       }
 
-      .peak section article {
+      .peek section article {
         padding: 20px;
         /* <vertical align> */
         position: relative;
@@ -78,9 +78,9 @@
         /* </vertical align> */
       }
 
-      /* <peak controls> */
+      /* <peek controls> */
 
-      .peak-controls {
+      .peek-controls {
         position: fixed;
         font-size: 12px;
         font-family: 'Merriweather', serif;
@@ -98,29 +98,29 @@
         z-index: 10000000;
       }
 
-      .peak-controls a {
+      .peek-controls a {
         cursor: pointer;
         padding: 2px 6px;
         transition: 0.2s all;
       }
 
-      .peak-controls a:first-of-type {
+      .peek-controls a:first-of-type {
         display: none;
         border-right: 1px solid rgb(0,0,0);
         padding-right: 5px;
       }
 
-      .peak-controls a:last-of-type {
+      .peek-controls a:last-of-type {
         display: none;
         border-left: 1px solid rgb(0,0,0);
         padding-left: 5px;
       }
 
-      /* </peak controls> */
+      /* </peek controls> */
 
       /* <progress> */
 
-      .peak .progress {
+      .peek .progress {
         position: absolute;
         bottom: 0px;
         z-index: 10;
@@ -128,7 +128,7 @@
         background: rgb(220,220,220);
       }
 
-      .peak .progress span {
+      .peek .progress span {
         display: block;
         background: rgb(26,188,156);
         height: 4px;
@@ -146,14 +146,14 @@
   <body>
 
     <!-- controls -->
-    <div class="peak-controls">
-      <a onclick="Peak.previous()">&larr;</a>
-      <a onclick="Peak.toggle()">Peak</a>
-      <a onclick="Peak.next()">&rarr;</a>
+    <div class="peek-controls">
+      <a onclick="Peek.previous()">&larr;</a>
+      <a onclick="Peek.toggle()">Peek</a>
+      <a onclick="Peek.next()">&rarr;</a>
     </div>
     <!-- </controls> -->
 
-    <div class="peak">
+    <div class="peek">
       <!-- <slides> -->
       <div class="slides">
 
@@ -245,7 +245,7 @@
       }
 
       var setSlideLocations = function(slides) {
-        // Position slides within the peak drawer.
+        // Position slides within the peek drawer.
         for (var i = 0; i < slides.count; i++) {
           var slide = slides.list[i];
           if (slide.dataset.index < slides.current) setSlideLocation(slide, 'left');
@@ -256,49 +256,49 @@
 
       var showProgress = function(slides) {
         // Sets the width of the progress bar.
-        var progress = document.querySelector('.peak .progress span');
+        var progress = document.querySelector('.peek .progress span');
         var percentage = ((slides.current - 1) / (slides.count- 1) ) * 100;
         progress.style.width = percentage + '%';
       }
 
-      var isPeakActive = function() {
-        // Checks whether the peak drawer is open.
-        var peak = document.querySelector('.peak');
-        if (peak.className.indexOf('visible') != -1) return true;
+      var isPeekActive = function() {
+        // Checks whether the peek drawer is open.
+        var peek = document.querySelector('.peek');
+        if (peek.className.indexOf('visible') != -1) return true;
         return false;
       };
 
       var bindClickableKeys = function() {
         // Binds clickable keys with actions.
         document.onkeydown = function(e) {
-          if (e.ctrlKey && e.shiftKey && e.keyCode == '191') Peak.toggle(); // Ctrl + ?
-          if (isPeakActive() == true) {
-            if (e.keyCode == '40' || e.keyCode == '27') Peak.toggle(); // down arrow or Esc
-            if (e.keyCode == '37') Peak.previous(); // left arrow
-            if (e.keyCode == '39' || e.keyCode == '32') Peak.next(); // right arrow
+          if (e.ctrlKey && e.shiftKey && e.keyCode == '191') Peek.toggle(); // Ctrl + ?
+          if (isPeekActive() == true) {
+            if (e.keyCode == '40' || e.keyCode == '27') Peek.toggle(); // down arrow or Esc
+            if (e.keyCode == '37') Peek.previous(); // left arrow
+            if (e.keyCode == '39' || e.keyCode == '32') Peek.next(); // right arrow
           }
         };
       };
 
       var injectProgressBar = function() {
-        // Add the progress bar to peak drawer.
+        // Add the progress bar to peek drawer.
         // Injects: <div class="progress"><span></span></div>
-        var peak = document.querySelector('.peak');
+        var peek = document.querySelector('.peek');
         var progress = document.createElement('div');
         var progressBar = document.createElement('span');
         progress.className = 'progress';
         progress.appendChild(progressBar);
-        peak.appendChild(progress);
+        peek.appendChild(progress);
       }
 
       // NEEDS IMPROVEMENT
       var toggleControls = function() {
-        // Shows the peak navigation if the drawer is open.
-        var previous = document.querySelector('.peak-controls a:first-of-type');
-        var next = document.querySelector('.peak-controls a:last-of-type');
+        // Shows the peek navigation if the drawer is open.
+        var previous = document.querySelector('.peek-controls a:first-of-type');
+        var next = document.querySelector('.peek-controls a:last-of-type');
 
         // Check when drawer is closed
-        if (isPeakActive() == false) {
+        if (isPeekActive() == false) {
           // On click, when drawer closed -> draw will open -> show controls
           previous.style.display = 'inline';
           next.style.display = 'inline';
@@ -311,49 +311,49 @@
 
       // Implementation
 
-      var Peak = {};
+      var Peek = {};
 
-      Peak.slides = {};
-      Peak.slides.list = document.querySelector('.peak .slides').children;
-      Peak.slides.count = Peak.slides.list.length;
-      Peak.slides.previous  = 0;
-      Peak.slides.current   = 1;
-      Peak.slides.next      = 2;
+      Peek.slides = {};
+      Peek.slides.list = document.querySelector('.peek .slides').children;
+      Peek.slides.count = Peek.slides.list.length;
+      Peek.slides.previous  = 0;
+      Peek.slides.current   = 1;
+      Peek.slides.next      = 2;
 
-      Peak.toggle = function() {
-        // Toggles the state of the peak drawer (open / closed)
+      Peek.toggle = function() {
+        // Toggles the state of the peek drawer (open / closed)
         toggleControls();
-        var peak = document.querySelector('.peak');
-        if (peak.className == 'peak') appendClass(peak, 'visible');
-        else removeClass(peak, 'visible');
+        var peek = document.querySelector('.peek');
+        if (peek.className == 'peek') appendClass(peek, 'visible');
+        else removeClass(peek, 'visible');
       };
 
-      Peak.next = function() {
+      Peek.next = function() {
         // Moves to and displays the next slide.
-        incrementSlides(Peak.slides);
-        setSlideLocations(Peak.slides);
-        showProgress(Peak.slides);
+        incrementSlides(Peek.slides);
+        setSlideLocations(Peek.slides);
+        showProgress(Peek.slides);
       };
 
-      Peak.previous = function() {
+      Peek.previous = function() {
         // Moves to and displays the previous slide.
-        decrementSlides(Peak.slides);
-        setSlideLocations(Peak.slides);
-        showProgress(Peak.slides);
+        decrementSlides(Peek.slides);
+        setSlideLocations(Peek.slides);
+        showProgress(Peek.slides);
       };
 
-      Peak.init = function() {
-        // Starts Peak.
-        indexSlides(Peak.slides);
-        setSlideLocations(Peak.slides);
+      Peek.init = function() {
+        // Starts Peek.
+        indexSlides(Peek.slides);
+        setSlideLocations(Peek.slides);
         injectProgressBar();
-        showProgress(Peak.slides);
+        showProgress(Peek.slides);
         bindClickableKeys();
       };
 
       // Initilization
 
-      Peak.init();
+      Peek.init();
 
     </script>
 
