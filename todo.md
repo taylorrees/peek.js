@@ -1,0 +1,10 @@
+
+- initialization options
+  - default font family
+  - default color
+  - default slide layout
+- URL options
+  - toggle peak
+  - select slide
+  - update url on transition
+- Flip text color automatically based on background

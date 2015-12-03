@@ -76,11 +76,15 @@
 
       .peek section article {
         padding: 20px;
+        /* <defaults> */
+        max-width: 75%;
+        margin: auto;
         /* <vertical align> */
         position: relative;
         top: 50%;
         transform: translateY(-50%);
         /* </vertical align> */
+        /* </defaults> */
       }
 
       /* <peek controls> */
@@ -91,7 +95,6 @@
         font-family: 'Merriweather', serif;
         bottom: 15px;
         right: 15px;
-        background: rgb(255,255,255);
         border: 1px solid rgb(0,0,0);
         border-radius: 40px;
         padding: 2px;
@@ -148,15 +151,7 @@
     </style>
 
   </head>
-  <body>
-
-    <!-- controls -->
-    <div class="peek-controls">
-      <a onclick="Peek.previous()">&larr;</a>
-      <a onclick="Peek.toggle()">Peek</a>
-      <a onclick="Peek.next()">&rarr;</a>
-    </div>
-    <!-- </controls> -->
+  <body style="font-family: 'Merriweather';">
 
     <div class="peek">
       <!-- <slides> -->
@@ -285,6 +280,53 @@
         };
       };
 
+      var setSlideBackground = function(slide, url) {
+        // Sets the background image of the slide.
+        if (url) slide.style.backgroundImage = "url('" + url + "')";
+      };
+
+      var setBackgrounds = function(slides) {
+        // Sets the background image of slides with data-background attribute.
+        for (var i = 0; i < slides.count; i++) {
+          var slide = slides.list[i];
+          setSlideBackground(slide, slide.dataset.background);
+        }
+      };
+
+      var getNavigationButtons = function() {
+        // Get the navigation buttons from the DOM
+        var peakControls = document.querySelector('.peek-controls');
+        return {
+          previous: peakControls.children[0],
+          toggle: peakControls.children[1],
+          next: peakControls.children[2]
+        };
+      }
+
+      var toggleControls = function() {
+        // Shows peek navigation buttons when drawer is open.
+        var navigationButtons = getNavigationButtons();
+        // Check when drawer is closed
+        if (isPeekActive() == false) {
+          // On click, when drawer closed -> draw will open -> show controls
+          navigationButtons.previous.style.display = 'inline';
+          navigationButtons.next.style.display = 'inline';
+        } else {
+          // On click, when drawer open -> draw will close -> hide controls
+          navigationButtons.previous.style.display = 'none';
+          navigationButtons.next.style.display = 'none';
+        }
+      };
+
+      var bindNavigationButtons = function(previous, toggle, next) {
+        // Binds the click event for navigation button click.
+        previous.onclick = function() { Peek.previous() };
+        toggle.onclick = function() { Peek.toggle() };
+        next.onclick = function() { Peek.next() };
+      };
+
+      // DOM Injection
+
       var injectProgressBar = function() {
         // Add the progress bar to peek drawer.
         // Injects: <div class="progress"><span></span></div>
@@ -296,47 +338,33 @@
         peek.appendChild(progress);
       };
 
-      var toggleControls = function() {
-        // Shows peek navigation buttons when drawer is open.
-        var previousButton = document.querySelector('.peek-controls a:first-of-type');
-        var nextButton = document.querySelector('.peek-controls a:last-of-type');
-        // Check when drawer is closed
-        if (isPeekActive() == false) {
-          // On click, when drawer closed -> draw will open -> show controls
-          previousButton.style.display = 'inline';
-          nextButton.style.display = 'inline';
-        } else {
-          // On click, when drawer open -> draw will close -> hide controls
-          previousButton.style.display = 'none';
-          nextButton.style.display = 'none';
-        }
+      var injectPeekControls = function() {
+        // Add the peek navigation bar to DOM.
+        // Injects: <div class="peek-controls"><a>&larr;</a><a>Peek</a><a>&rarr;</a></div>
+        var peekControls = document.createElement('div');
+        peekControls.className = 'peek-controls';
+        // previous
+        var previousButton = document.createElement('a');
+        previousButton.innerHTML = '&larr;';
+        // toggle
+        var toggleButton = document.createElement('a');
+        toggleButton.innerHTML = 'Peek';
+        // next
+        var nextButton = document.createElement('a');
+        nextButton.innerHTML = '&rarr;';
+
+        peekControls.appendChild(previousButton);
+        peekControls.appendChild(toggleButton);
+        peekControls.appendChild(nextButton);
+
+        // add click events
+        bindNavigationButtons(previousButton, toggleButton, nextButton);
+        document.body.appendChild(peekControls);
       };
-
-      var setSlideBackground = function(slide, url) {
-        // Sets the background image of the slide.
-        if (url) slide.style.backgroundImage = "url('" + url + "')";
-      }
-
-      var setBackgrounds = function(slides) {
-        // Sets the background image of slides with data-background attribute.
-        for (var i = 0; i < slides.count; i++) {
-          var slide = slides.list[i];
-          setSlideBackground(slide, slide.dataset.background);
-        }
-      }
 
       // Implementation
 
-      var Peek = {};
-
-      Peek.slides = {};
-      Peek.slides.list = document.querySelector('.peek .slides').children;
-      Peek.slides.count = Peek.slides.list.length;
-      Peek.slides.previous  = 0;
-      Peek.slides.current   = 1;
-      Peek.slides.next      = 2;
-
-      Peek.toggle = function() {
+      var togglePeek = function() {
         // Toggles the state of the peek drawer (open / closed)
         toggleControls();
         var peek = document.querySelector('.peek');
@@ -344,29 +372,43 @@
         else removeClass(peek, 'visible');
       };
 
-      Peek.next = function() {
+      var nextSlide = function() {
         // Moves to and displays the next slide.
         incrementSlides(Peek.slides);
         setSlideLocations(Peek.slides);
         showProgress(Peek.slides);
       };
 
-      Peek.previous = function() {
+      var previousSlide = function() {
         // Moves to and displays the previous slide.
         decrementSlides(Peek.slides);
         setSlideLocations(Peek.slides);
         showProgress(Peek.slides);
       };
 
-      Peek.initialize = function(options) {
+      var peakInitialize = function(options) {
         // Starts Peek.
         indexSlides(Peek.slides);
         setSlideLocations(Peek.slides);
+        injectPeekControls();
         injectProgressBar();
         showProgress(Peek.slides);
         bindClickableKeys();
         setBackgrounds(Peek.slides);
       };
+
+      var Peek = {};
+
+      Peek.slides = {};
+      Peek.slides.list = document.querySelector('.peek .slides').children;
+      Peek.slides.count     = Peek.slides.list.length;
+      Peek.slides.previous  = 0;
+      Peek.slides.current   = 1;
+      Peek.slides.next      = 2;
+      Peek.toggle           = togglePeek;
+      Peek.next             = nextSlide;
+      Peek.previous         = previousSlide;
+      Peek.initialize       = peakInitialize;
 
       // Initilization
 
