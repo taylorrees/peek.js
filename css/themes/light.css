@@ -113,6 +113,19 @@
   line-height: 1.8;
 }
 
+.peek input {
+  font-family: 'Lato', sans-serif;
+  border: 1px solid;
+  margin: 4px;
+  padding: 5px 10px;
+  background: none;
+  text-shadow: none;
+  outline: none;
+  font-size: 75%;
+  letter-spacing: 0.2px;
+  border-radius: 4px;
+}
+
 /****************************************************
 * LINKS
 ****************************************************/
@@ -129,12 +142,14 @@
   color: #16a085;
 }
 
-.peek a.button,
-.peek button.button,
-.peek a.rounded-button,
-.peek button.rounded-button,
-.peek a.square-button,
-.peek button.square-button {
+/****************************************************
+* BUTTONS
+****************************************************/
+
+.peek button,
+.peek .button,
+.peek .rounded-button,
+.peek .square-button {
   font-family: 'Lato', sans-serif;
   border: 1px solid;
   margin: 4px;
@@ -147,13 +162,12 @@
   letter-spacing: 0.2px;
   border-radius: 4px;
 }
-.peek a.rounded-button,
-.peek button.rounded-button {
+
+.peek .rounded-button {
   border-radius: 100px;
 }
 
-.peek a.square-button,
-.peek button.square-button {
+.peek .square-button {
   border-radius: 0px;
 }
 
