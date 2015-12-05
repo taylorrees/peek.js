@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>Peek Example</title>
+    <link rel="stylesheet" href="../css/peek.css">
+    <link rel="stylesheet" href="../css/themes/light.css">
+
+  </head>
+  <body>
+
+    <div class="peek visible">
+      <!-- <slides> -->
+      <div class="slides">
+
+        <section>
+          <article data-layout="dual-text-column">
+
+            <h2>Welcome to peek.</h2>
+            <p>
+              The <a href="#">peak.js</a> plan. Peak will be a small javascript package that designers and developers alike can require to provide their users with simple walkthrough tutorials.
+            <p>
+              To add peak.js the following code must be added to the body of the required HTML file. The hierarchy of a peak show will be as follows.
+            </p>
+
+          </article>
+        </section>
+
+        <section>
+          <article>
+
+            <h1>What is Peek?</h1>
+            <p>
+              The peak.js plan. Peak will be a small javascript package that designers and developers alike can require to provide their users with simple walkthrough tutorials.
+            </p>
+
+          </article>
+        </section>
+
+        <section>
+          <article data-layout="image-left">
+
+            <h1>Current</h1>
+            <p>
+              You'd place some really handy information that would help your users in here.
+            </p>
+            <a href="#"><img src="img/example.jpg"/></a>
+
+          </article>
+        </section>
+
+        <section>
+          <article data-layout="image-right">
+
+            <h1>Current</h1>
+            <p>
+              You'd place some really handy information that would help your users in here.
+            </p>
+            <img src="img/example.jpg"/>
+
+          </article>
+        </section>
+
+        <section data-background="img/example.jpg">
+          <article>
+
+            <h1>Slide with a background.</h1>
+
+          </article>
+        </section>
+
+        <section>
+          <article data-layout="media-center">
+
+            <h6>Next we can</h6>
+            <img src="img/example.jpg"/>
+
+          </article>
+        </section>
+
+        <section>
+          <article>
+
+            <h1>Current</h1>
+            <p>
+              You'd place some really handy information that would help your users in here.
+            </p>
+
+          </article>
+        </section>
+
+        <section>
+          <article>
+
+            <h6>Include Tables</h6>
+            <table>
+              <thead>
+                <tr>
+                  <th>Column One</th>
+                  <th>Column Two</th>
+                  <th>Column Three</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Table Header</td>
+                  <td>Table Data</td>
+                  <td>Table Data</td>
+                </tr>
+                <tr>
+                  <td>Table Header</td>
+                  <td>Table Data</td>
+                  <td>Table Data</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </article>
+        </section>
+
+        <section>
+          <article data-layout="dual-text-column">
+
+            <h2>Title here.</h2>
+            <p>
+              You'd place some really handy information that would help your users in here.
+              You'd place some really handy information that would help your users in here.
+              You'd place some really handy information that would help your users.
+            </p>
+            <p>
+              You'd place some really handy information that would help your users in here.
+              You'd place some really handy information that would help your users in here.
+            </p>
+
+          </article>
+        </section>
+
+        <section>
+          <article data-layout="media-center">
+
+            <h6>Video support</h6>
+            <video src="img/example.mov" autoplay loop>
+
+          </article>
+        </section>
+
+        <section>
+          <article>
+
+            <h3>Lists</h3>
+            <dl>
+              <dt>One</dt>
+              <dd>You'd place some really handy information that would help your users in here.
+              You'd place some really handy information that would help your users in here.
+              </dd>
+              <dt>Two</dt>
+              <dd>You'd place some really handy information that would help your users in here.
+              You'd place some really handy information that would help your users in here.
+              </dd>
+            </dl>
+            <ul>
+              <li>Item One</li>
+              <ol>
+                <li>Item One</li>
+                <li>Item Two</li>
+              </ol>
+              <li>Item Two</li>
+            </ul>
+
+          </article>
+        </section>
+
+        <section>
+          <article>
+
+            <h2>Quotes</h2>
+            <p>
+              You'd <q>place some really handy information that would help</q> your users in here.
+              You'd place some really handy information that would help your users in here.
+            </p>
+            <blockquote>
+              You'd place some really handy information that would help your users in here.
+              You'd place some really handy information that would help your users in here.
+              You'd place some really handy information that would help your users in here.
+            </blockquote>
+
+          </article>
+        </section>
+
+        <section>
+          <article>
+
+            <h2>Code</h2>
+            <code>var i = 0;</code>
+            <br>
+            <br>
+            <pre>
+
+              var i = 10;
+              for (var j = 0; j < i; j++) {
+                console.log(i);
+              }
+            </pre>
+
+          </article>
+        </section>
+
+        <section>
+          <article>
+
+            <h6>Buttons</h6>
+            <p>
+              <a href="#" class="button">Button</a>
+              <button type="button" class="button">Button</button>
+            </p>
+            <h6>Rounded Buttons</h6>
+            <p>
+              <a href="#" class="rounded-button">Button</a>
+              <button type="button" class="rounded-button">Button</button>
+            </p>
+            <h6>Square Buttons</h6>
+            <p>
+              <a href="#" class="square-button">Button</a>
+              <button type="button" class="square-button">Button</button>
+            </p>
+
+          </article>
+        </section>
+
+      </div>
+      <!-- </slides> -->
+
+    </div>
+
+    <script type="text/javascript" src="../js/peek.js"></script>
+    <script type="text/javascript">Peek.init();</script>
+
+  </body>
+</html>

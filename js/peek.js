@@ -106,6 +106,13 @@ var Peek = (function() {
     };
   }
 
+  var bindNavigationButtons = function(previous, toggle, next) {
+    // Binds the click event for navigation button click.
+    previous.onclick = function() { Peek.previous() };
+    toggle.onclick = function() { Peek.toggle() };
+    next.onclick = function() { Peek.next() };
+  };
+
   var toggleControls = function() {
     // Shows peek navigation buttons when drawer is open.
     var navigationButtons = getNavigationButtons();
@@ -121,13 +128,6 @@ var Peek = (function() {
     }
   };
 
-  var bindNavigationButtons = function(previous, toggle, next) {
-    // Binds the click event for navigation button click.
-    previous.onclick = function() { Peek.previous() };
-    toggle.onclick = function() { Peek.toggle() };
-    next.onclick = function() { Peek.next() };
-  };
-
   // DOM Injection
 
   var injectProgressBar = function() {
@@ -141,7 +141,7 @@ var Peek = (function() {
     peek.appendChild(progress);
   };
 
-  var injectPeekControls = function() {
+  var injectControls = function() {
     // Add the peek navigation bar to DOM.
     // Injects: <div class="peek-controls"><a>&larr;</a><a>Peek</a><a>&rarr;</a></div>
     var peekControls = document.createElement('div');
@@ -167,7 +167,7 @@ var Peek = (function() {
 
   // Implementation
 
-  var togglePeek = function() {
+  var toggle = function() {
     // Toggles the state of the peek drawer (open / closed)
     toggleControls();
     var peek = document.querySelector('.peek');
@@ -175,25 +175,25 @@ var Peek = (function() {
     else removeClass(peek, 'visible');
   };
 
-  var nextPeekSlide = function() {
+  var next = function() {
     // Moves to and displays the next slide.
     incrementSlides(Peek.slides);
     setSlideLocations(Peek.slides);
     showProgress(Peek.slides);
   };
 
-  var previousPeekSlide = function() {
+  var previous = function() {
     // Moves to and displays the previous slide.
     decrementSlides(Peek.slides);
     setSlideLocations(Peek.slides);
     showProgress(Peek.slides);
   };
 
-  var peakInitialize = function(options) {
+  var init = function(options) {
     // Starts Peek.
     indexSlides(Peek.slides);
     setSlideLocations(Peek.slides);
-    injectPeekControls();
+    injectControls();
     injectProgressBar();
     showProgress(Peek.slides);
     bindClickableKeys();
@@ -208,10 +208,10 @@ var Peek = (function() {
   Peek.slides.previous  = 0;
   Peek.slides.current   = 1;
   Peek.slides.next      = 2;
-  Peek.toggle           = togglePeek;
-  Peek.next             = nextPeekSlide;
-  Peek.previous         = previousPeekSlide;
-  Peek.init             = peakInitialize;
+  Peek.toggle           = toggle;
+  Peek.next             = next;
+  Peek.previous         = previous;
+  Peek.init             = init;
 
   // Initilization
 

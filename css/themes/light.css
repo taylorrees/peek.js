@@ -1,0 +1,340 @@
+/*
+* peek.js light theme
+* https://github.com/taylorrees/peak.js
+*
+* Copyright (C) 2015 Taylor Rees, http://taylorre.es
+*
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Merriweather:300,300italic,400,400italic,700);
+
+/****************************************************
+* GLOBAL
+****************************************************/
+
+.peek {
+  font-family: 'Lato', sans-serif;
+  font-weight: normal;
+  letter-spacing: 0.2px;
+  border-color: rgba(0, 0, 0, 0.05);
+}
+.peek section {
+  background: #fafafa;
+}
+
+/****************************************************
+* HEADINGS
+****************************************************/
+
+.peek h1,
+.peek h2,
+.peek h3,
+.peek h4,
+.peek h5,
+.peek h6 {
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.peek h1 {
+  font-size: 200%;
+}
+.peek h2 {
+  font-size: 180%;
+}
+.peek h3 {
+  font-size: 160%;
+}
+.peek h4 {
+  font-size: 140%;
+}
+.peek h5 {
+  text-transform: uppercase;
+  font-size: 100%;
+  letter-spacing: 1.4px;
+}
+.peek h6 {
+  text-transform: uppercase;
+  font-size: 100%;
+  letter-spacing: 1.4px;
+}
+
+/****************************************************
+* TEXT
+****************************************************/
+
+.peek p {
+  font-size: 100%;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.peek b,
+.peek strong {
+  font-weight: bold;
+}
+
+.peek em {
+  font-style: italic;
+}
+
+.peek sup {
+  vertical-align: super;
+  font-size: 60%;
+}
+
+.peek sub {
+  vertical-align: sub;
+  font-size: 60%;
+}
+
+.peek q,
+.peek blockquote {
+  quotes: none;
+  font-family: 'Merriweather', serif;
+  font-size: 90%;
+  font-style: italic;
+}
+
+.peek q::before {
+  content: '\201C';
+}
+
+.peek q::after {
+  content: '\201D';
+}
+
+.peek blockquote {
+  padding-left: 10px;
+  border-left: 2px solid rgb(0,0,0);
+  line-height: 1.8;
+}
+
+/****************************************************
+* LINKS
+****************************************************/
+
+.peek a {
+  color: #1abc9c;
+  text-decoration: none;
+  -webkit-transition: 0.1s all;
+     -moz-transition: 0.1s all;
+          transition: 0.1s all;
+}
+
+.peek a:hover {
+  color: #16a085;
+}
+
+.peek a.button,
+.peek button.button,
+.peek a.rounded-button,
+.peek button.rounded-button,
+.peek a.square-button,
+.peek button.square-button {
+  font-family: 'Lato', sans-serif;
+  border: 1px solid;
+  margin: 4px;
+  padding: 5px 10px;
+  background: none;
+  text-shadow: none;
+  outline: none;
+  font-size: 75%;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  border-radius: 4px;
+}
+.peek a.rounded-button,
+.peek button.rounded-button {
+  border-radius: 100px;
+}
+
+.peek a.square-button,
+.peek button.square-button {
+  border-radius: 0px;
+}
+
+/****************************************************
+* OTHER
+****************************************************/
+
+.peek img,
+.peek video,
+.peek iframe {
+  max-width: 70%;
+  max-height: 70%;
+  border-radius: 2.5px;
+}
+
+.peek table {
+  margin: 15px 0px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 0px;
+  border-spacing: 0px;
+}
+.peek table th {
+  font-weight: 600;
+}
+.peek table th,
+.peek table td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.peek ul,
+.peek ol,
+.peek dl {
+  display: block;
+  margin: 10px 0px;
+}
+
+.peek ul ul,
+.peek ul ol,
+.peek ol ol,
+.peek ol ul {
+  display: block;
+  margin: 0px;
+  margin-left: 30px;
+}
+
+.peek dt {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.peek dd {
+  margin-left: 20px;
+}
+
+.peek code,
+.peek pre {
+  font-family: monospace;
+  padding: 5px;
+  background: #efefef;
+  border-radius: 3px;
+}
+
+.peek code {
+  display: inline;
+}
+
+.peek pre {
+  padding: 16px 5px;
+  display: block;
+  overflow: scroll;
+  word-wrap: break-word;
+  max-width: 75%;
+  text-align: left;
+}
+
+/****************************************************
+* SHARED LAYOUT: IMAGE (L & R)
+****************************************************/
+
+.peek article[data-layout="image-right"],
+.peek article[data-layout="image-left"] {
+  max-width: 85%;
+  /* <vertical align> */
+  position: relative;
+  top: 35%;
+  transform: translateY(-50%);
+  /* </vertical align> */
+  text-align: left;
+}
+
+/****************************************************
+* LAYOUT: IMAGE RIGHT
+****************************************************/
+
+.peek article[data-layout="image-right"] h1,
+.peek article[data-layout="image-right"] h2,
+.peek article[data-layout="image-right"] h3,
+.peek article[data-layout="image-right"] h4,
+.peek article[data-layout="image-right"] h5,
+.peek article[data-layout="image-right"] h6,
+.peek article[data-layout="image-right"] p {
+  display: inline-block;
+  width: 55%;
+  float: left;
+}
+.peek article[data-layout="image-right"] img {
+  max-height: 60%;
+  max-width: 40%;
+  float: right;
+  border-radius: 2.5px;
+  /* <vertical align> */
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  /* </vertical align> */
+}
+
+/****************************************************
+* LAYOUT: IMAGE LEFT
+****************************************************/
+
+.peek article[data-layout="image-left"] h1,
+.peek article[data-layout="image-left"] h2,
+.peek article[data-layout="image-left"] h3,
+.peek article[data-layout="image-left"] h4,
+.peek article[data-layout="image-left"] h5,
+.peek article[data-layout="image-left"] h6,
+.peek article[data-layout="image-left"] p {
+  display: inline-block;
+  width: 55%;
+  float: right;
+  text-align: left;
+}
+.peek article[data-layout="image-left"] img {
+  max-height: 60%;
+  max-width: 40%;
+  float: left;
+  border-radius: 2.5px;
+  /* <vertical align> */
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  /* </vertical align> */
+}
+
+/****************************************************
+* LAYOUT: MEDIA CENTER
+****************************************************/
+
+.peek article[data-layout="media-center"] {
+  text-align: center;
+  max-width: 60%;
+}
+
+/****************************************************
+* LAYOUT: DUAL TEXT COLUMNS
+****************************************************/
+
+.peek article[data-layout="dual-text-column"] p {
+  display: inline-block;
+  width: 45%;
+  margin: 0px 10px;
+  margin-bottom: 10px;
+  vertical-align: text-top;
+}
+.peek article[data-layout="dual-text-column"] h1,
+.peek article[data-layout="dual-text-column"] h2,
+.peek article[data-layout="dual-text-column"] h3,
+.peek article[data-layout="dual-text-column"] h4,
+.peek article[data-layout="dual-text-column"] h5,
+.peek article[data-layout="dual-text-column"] h6 {
+  margin: 12px 10px;
+  margin-top: 0px;
+}
+
+/****************************************************
+* IMAGE BACKGROUND
+****************************************************/
+
+.peek section[data-background] {
+  color: rgb(255, 255, 255);
+  text-align: center;
+}

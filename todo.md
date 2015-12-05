@@ -1,10 +1,12 @@
 
 - initialization options
-  - default font family | completed
+  - default font family
   - default color
   - default slide layout
-- URL options
+- URL options <-- Urgent*
   - toggle peak
   - select slide
   - update url on transition
 - Flip text color automatically based on background
+- Touch optimize
+- Code blocks
