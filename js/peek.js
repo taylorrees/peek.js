@@ -128,6 +128,41 @@ var Peek = (function() {
     }
   };
 
+  // Small library to get, add and remove hash values to / from url.
+  var Hash = {
+    get : function() {
+      // Gets the URL parameters and returns their value.
+      var result = {};
+      var hash = window.location.hash.split('#');
+      for (var i = 0; i < hash.length; i++) {
+        var query = hash[i].split('=');
+        // parameter = value
+        if (query[0] != '') result[query[0]] = query[1] != undefined ? query[1] : true;
+      }
+      // returns object of hashes and their values
+      return result;
+    },
+    add : function(parameter, value) {
+      // Adds to hash in the form #parameter=value (value is optional)
+      var hash = Hash.get();
+      var newHash = '';
+      hash[parameter] = value ? value : true;
+      for (query in hash) {
+        newHash = newHash + '#' + query + '=' + hash[query];
+      }
+      window.location.hash = newHash;
+    },
+    remove : function(parameter) {
+      var hash = Hash.get();
+      var newHash = '';
+      delete hash[parameter];
+      for (query in hash) {
+        newHash = newHash + '#' + query + '=' + hash[query];
+      }
+      window.location.hash = newHash;
+    }
+  };
+
   // DOM Injection
 
   var injectProgressBar = function() {
@@ -171,8 +206,13 @@ var Peek = (function() {
     // Toggles the state of the peek drawer (open / closed)
     toggleControls();
     var peek = document.querySelector('.peek');
-    if (peek.className == 'peek') appendClass(peek, 'visible');
-    else removeClass(peek, 'visible');
+    if (peek.className == 'peek') {
+      appendClass(peek, 'visible');
+      Hash.add('peek');
+    } else {
+      removeClass(peek, 'visible');
+      Hash.remove('peek');
+    }
   };
 
   var next = function() {
@@ -180,6 +220,7 @@ var Peek = (function() {
     incrementSlides(Peek.slides);
     setSlideLocations(Peek.slides);
     showProgress(Peek.slides);
+    Hash.add('pslide', Peek.slides.current);
   };
 
   var previous = function() {
@@ -187,10 +228,20 @@ var Peek = (function() {
     decrementSlides(Peek.slides);
     setSlideLocations(Peek.slides);
     showProgress(Peek.slides);
+    Hash.add('pslide', Peek.slides.current);
   };
 
   var init = function(options) {
     // Starts Peek.
+    var urlHash = Hash.get();
+    // pslide used to keep hash unique
+    if (urlHash.pslide) {
+      // set index from pslide hash
+      var current = parseInt(urlHash.pslide);
+      Peek.slides.previous = current - 1;
+      Peek.slides.current = current;
+      Peek.slides.next = current + 1;
+    }
     indexSlides(Peek.slides);
     setSlideLocations(Peek.slides);
     injectControls();
@@ -198,6 +249,8 @@ var Peek = (function() {
     showProgress(Peek.slides);
     bindClickableKeys();
     setBackgrounds(Peek.slides);
+    // if peek is param --> show peek
+    if (urlHash.peek == 'true') Peek.toggle();
   };
 
   var Peek = {};
