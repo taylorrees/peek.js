@@ -130,6 +130,7 @@ var Peek = (function() {
 
   // Small library to get, add and remove hash values to / from url.
   var Hash = {
+
     get : function() {
       // Gets the URL parameters and returns their value.
       var result = {};
@@ -142,6 +143,7 @@ var Peek = (function() {
       // returns object of hashes and their values
       return result;
     },
+
     add : function(parameter, value) {
       // Adds to hash in the form #parameter=value (value is optional)
       var hash = Hash.get();
@@ -152,6 +154,7 @@ var Peek = (function() {
       }
       window.location.hash = newHash;
     },
+
     remove : function(parameter) {
       var hash = Hash.get();
       var newHash = '';
@@ -161,6 +164,7 @@ var Peek = (function() {
       }
       window.location.hash = newHash;
     }
+    
   };
 
   // DOM Injection
