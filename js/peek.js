@@ -221,40 +221,43 @@ var Peek = (function() {
 
   function next() {
     // Moves to and displays the next slide.
-    incrementSlides(Peek.slides);
-    setSlideLocations(Peek.slides);
-    showProgress(Peek.slides);
-    Hash.add('pslide', Peek.slides.current);
+    var slides = this.slides;
+    incrementSlides(slides);
+    setSlideLocations(slides);
+    showProgress(slides);
+    Hash.add('pslide', slides.current);
   }
 
   function previous() {
     // Moves to and displays the previous slide.
-    decrementSlides(Peek.slides);
-    setSlideLocations(Peek.slides);
-    showProgress(Peek.slides);
-    Hash.add('pslide', Peek.slides.current);
+    var slides = this.slides;
+    decrementSlides(slides);
+    setSlideLocations(slides);
+    showProgress(slides);
+    Hash.add('pslide', slides.current);
   }
 
   function init(options) {
     // Starts Peek.
     var urlHash = Hash.get();
+    var slides = this.slides;
     // pslide used to keep hash unique
     if (urlHash.pslide) {
       // set index from pslide hash
       var current = parseInt(urlHash.pslide);
-      Peek.slides.previous = current - 1;
-      Peek.slides.current = current;
-      Peek.slides.next = current + 1;
+      slides.previous = current - 1;
+      slides.current = current;
+      slides.next = current + 1;
     }
-    indexSlides(Peek.slides);
-    setSlideLocations(Peek.slides);
+    indexSlides(slides);
+    setSlideLocations(slides);
     injectControls();
     injectProgressBar();
-    showProgress(Peek.slides);
+    showProgress(slides);
     bindClickableKeys();
-    setBackgrounds(Peek.slides);
+    setBackgrounds(slides);
     // if peek is param --> show peek
-    if (urlHash.peek == 'true') Peek.toggle();
+    if (urlHash.peek == 'true') this.toggle();
   }
 
   var Peek = {};
