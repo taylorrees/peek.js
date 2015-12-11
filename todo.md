@@ -1,9 +1,6 @@
 
-- URL options <-- Urgent*
-  - toggle peak
-  - select slide
-  - update url on transition
-- Flip text color automatically based on background
 - Touch optimize
 - autoplay
+- optional controls
 - make hash updates optional
+- adjust themes to mobile

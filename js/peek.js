@@ -2,21 +2,21 @@ var Peek = (function() {
 
   // Library
 
-  var appendClass = function(s, c) {
+  function appendClass(s, c) {
     // Accepts two strings: s and c.
     // The function appends the class 'c' to the source 's'
 
     return s.className += ' ' + c;
   }
 
-  var removeClass = function(s, c) {
+  function removeClass(s, c) {
     // Accepts two strings: s and c.
     // The function removes the class 'c' from the source 's'
 
     return s.className = s.className.replace(c, '').trim();
   }
 
-  var indexSlides = function(slides) {
+  function indexSlides(slides) {
     // Add indexes to slides
     for (var i = 0; i < slides.count; i++) {
       var slide = slides.list[i];
@@ -24,7 +24,7 @@ var Peek = (function() {
     }
   }
 
-  var incrementSlides = function(slides) {
+  function incrementSlides(slides) {
     // Add one to slide order, largest value is n slides + 1
     if (slides.next < slides.count + 1) {
       slides.previous += 1;
@@ -33,7 +33,7 @@ var Peek = (function() {
     }
   }
 
-  var decrementSlides = function(slides) {
+  function decrementSlides(slides) {
     // Remove one from slide order, smallest value is 0
     if (slides.previous > 0) {
       slides.previous -= 1;
@@ -42,12 +42,12 @@ var Peek = (function() {
     }
   }
 
-  var setSlideLocation = function(slide, location) {
+  function setSlideLocation(slide, location) {
     // Accepts two strings: slide and location.
     return slide.dataset.location = location;
   }
 
-  var setSlideLocations = function(slides) {
+  function setSlideLocations(slides) {
     // Position slides within the peek drawer.
     for (var i = 0; i < slides.count; i++) {
       var slide = slides.list[i];
@@ -57,21 +57,21 @@ var Peek = (function() {
     }
   }
 
-  var showProgress = function(slides) {
+  function showProgress(slides) {
     // Sets the width of the progress bar.
     var progress = document.querySelector('.peek .progress span');
     var percentage = ((slides.current - 1) / (slides.count- 1) ) * 100;
     progress.style.width = percentage + '%';
   }
 
-  var isPeekActive = function() {
+  function isPeekActive() {
     // Checks whether the peek drawer is open.
     var peek = document.querySelector('.peek');
     if (peek.className.indexOf('visible') != -1) return true;
     return false;
-  };
+  }
 
-  var bindClickableKeys = function() {
+  function bindClickableKeys() {
     // Binds clickable keys with actions.
     document.onkeydown = function(e) {
       if (e.ctrlKey && e.shiftKey && e.keyCode == '191') Peek.toggle(); // Ctrl + ?
@@ -81,22 +81,22 @@ var Peek = (function() {
         if (e.keyCode == '39' || e.keyCode == '32') Peek.next(); // right arrow
       }
     };
-  };
+  }
 
-  var setSlideBackground = function(slide, url) {
+  function setSlideBackground(slide, url) {
     // Sets the background image of the slide.
     if (url) slide.style.backgroundImage = "url('" + url + "')";
-  };
+  }
 
-  var setBackgrounds = function(slides) {
+  function setBackgrounds(slides) {
     // Sets the background image of slides with data-background attribute.
     for (var i = 0; i < slides.count; i++) {
       var slide = slides.list[i];
       setSlideBackground(slide, slide.dataset.background);
     }
-  };
+  }
 
-  var getNavigationButtons = function() {
+  function getNavigationButtons() {
     // Get the navigation buttons from the DOM
     var peakControls = document.querySelector('.peek-controls');
     return {
@@ -106,14 +106,14 @@ var Peek = (function() {
     };
   }
 
-  var bindNavigationButtons = function(previous, toggle, next) {
+  function bindNavigationButtons(previous, toggle, next) {
     // Binds the click event for navigation button click.
     previous.onclick = function() { Peek.previous() };
     toggle.onclick = function() { Peek.toggle() };
     next.onclick = function() { Peek.next() };
-  };
+  }
 
-  var toggleControls = function() {
+  function toggleControls() {
     // Shows peek navigation buttons when drawer is open.
     var navigationButtons = getNavigationButtons();
     // Check when drawer is closed
@@ -126,7 +126,7 @@ var Peek = (function() {
       navigationButtons.previous.style.display = 'none';
       navigationButtons.next.style.display = 'none';
     }
-  };
+  }
 
   // Small library to get, add and remove hash values to / from url.
   var Hash = {
@@ -164,12 +164,12 @@ var Peek = (function() {
       }
       window.location.hash = newHash;
     }
-    
+
   };
 
   // DOM Injection
 
-  var injectProgressBar = function() {
+  function injectProgressBar() {
     // Add the progress bar to peek drawer.
     // Injects: <div class="progress"><span></span></div>
     var peek = document.querySelector('.peek');
@@ -178,9 +178,9 @@ var Peek = (function() {
     progress.className = 'progress';
     progress.appendChild(progressBar);
     peek.appendChild(progress);
-  };
+  }
 
-  var injectControls = function() {
+  function injectControls() {
     // Add the peek navigation bar to DOM.
     // Injects: <div class="peek-controls"><a>&larr;</a><a>Peek</a><a>&rarr;</a></div>
     var peekControls = document.createElement('div');
@@ -202,11 +202,11 @@ var Peek = (function() {
     // add click events
     bindNavigationButtons(previousButton, toggleButton, nextButton);
     document.body.appendChild(peekControls);
-  };
+  }
 
   // Implementation
 
-  var toggle = function() {
+  function toggle() {
     // Toggles the state of the peek drawer (open / closed)
     toggleControls();
     var peek = document.querySelector('.peek');
@@ -217,25 +217,25 @@ var Peek = (function() {
       removeClass(peek, 'visible');
       Hash.remove('peek');
     }
-  };
+  }
 
-  var next = function() {
+  function next() {
     // Moves to and displays the next slide.
     incrementSlides(Peek.slides);
     setSlideLocations(Peek.slides);
     showProgress(Peek.slides);
     Hash.add('pslide', Peek.slides.current);
-  };
+  }
 
-  var previous = function() {
+  function previous() {
     // Moves to and displays the previous slide.
     decrementSlides(Peek.slides);
     setSlideLocations(Peek.slides);
     showProgress(Peek.slides);
     Hash.add('pslide', Peek.slides.current);
-  };
+  }
 
-  var init = function(options) {
+  function init(options) {
     // Starts Peek.
     var urlHash = Hash.get();
     // pslide used to keep hash unique
@@ -255,7 +255,7 @@ var Peek = (function() {
     setBackgrounds(Peek.slides);
     // if peek is param --> show peek
     if (urlHash.peek == 'true') Peek.toggle();
-  };
+  }
 
   var Peek = {};
 
