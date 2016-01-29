@@ -6,6 +6,7 @@ Peek is a small javascript package that designers and developers alike can requi
 
 ```
 <script src="path/to/peek.js"></script>
+<script>Peek.init();</script>
 ```
 
 ## Hierarchy
