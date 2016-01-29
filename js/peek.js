@@ -321,6 +321,38 @@ var Peek = (function() {
       };
     },
 
+    bindControls : function() {
+
+      var peek = this;
+      var previous = document.querySelectorAll('[data-peek-previous]');
+      var next = document.querySelectorAll('[data-peek-next]');
+      var toggle = document.querySelectorAll('[data-peek-toggle]');
+
+      function bindControl(elements, control) {
+        /**
+         * @param {HTMLCollection} elements
+         * @param {function} control
+         *
+         * A small function to bind a function
+         * to each a click event on each
+         * HTMLElement in a collection of
+         * elements.
+         */
+        var i = 0;
+
+        for (i = 0; i < elements.length; i++) {
+          elements[i].onclick = function(e) {
+            control();
+          }
+        }
+      }
+
+      bindControl(toggle, peek.toggle);
+      bindControl(next, peek.next);
+      bindControl(previous, peek.previous);
+
+    },
+
     init : function() {
       /**
        * Starts Peek.
@@ -344,7 +376,10 @@ var Peek = (function() {
       slides.progressBar();
 
       this.bindKeys();
-      if (urlHash.peek === 'true') this.toggle();
+      this.bindControls();
+      if (urlHash.peek === 'true') {
+        this.toggle();
+      }
     }
 
   };

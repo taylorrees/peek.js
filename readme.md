@@ -1,112 +1,56 @@
 
 
-# The peak.js plan
+# Peek.js
 
-Peak will be a small javascript package that designers and developers alike can require to provide their users with simple walkthrough tutorials. To add peak.js the following code must be added to the body of the required HTML file.
+Peek is a small javascript package that designers and developers alike can require to provide their users with simple walkthrough tutorials. To add a peek.js walkthrough the following code must be added to the body of the required HTML file.
 
 ```
-<script src="path/to/peak.js"></script>
+<script src="path/to/peek.js"></script>
 ```
 
 ## Hierarchy
 
-The hierarchy of a peak show will be as follows.
+The hierarchy of a peek show should be as follows.
 
-**Plaintext**
+**Overview**
 ```
-- peak
+- peek
   - slides
     - slide
     - slide
 ```
 
-Where this translates into simple, hassle free markup.
+Which translates into simple, hassle free markup.
 
-**Markup**
+**HTML**
 ```
-- div.peak
-  - div.slides
-    - section
-    - section
-```
-
-Each peak show should be able to support any number of slides, such that the user can simply add a new slide by adding a new section. No classes should be directly involved with the addition of a single slide. This should make the users' experience as simple and pain free as possible.
-
-Each slide should be able to contain each of the following items, both together and separately.
-
-- Title
-- Body text
-- Image
-
-Such that the hierarchy of a peak slide is as follows.
-
-**Plaintext**
-```
-- slide
-  - title         (optional)
-  - body text     (optional)
-  - image         (optional)
+<div class="peek">
+  <div class="slides">
+    <section></section>
+    <section></section>
+  </div>
+</div>
 ```
 
-Where this again translates into simple, hassle free markup.
-
-**Markup**
-```
-- section
-  - h1          (optional)
-  - p           (optional)
-  - img         (optional)
-```
-
-The markup for the above would make use of native HTML tags, with the minimal number of classes required. This would be the case in order to improve the user experience and make it as trivial as possible to add a new slide.
+Each peek walkthrough supports any number of slides, such that a user can simply add a new slide by adding a new HTML `section`. No classes are directly involved with the addition of a single slide, making the experience as simple and pain free as possible.
 
 ## Controls
 
-The user should not be required to add any slide controls to their peak show, the controls should be dynamically added by the script. This should make the process of creating a peak show extremely simple as the user does not have to concern themselves with the navigation of the peak show.
+To allow your users to navigate the peek show, you will be required to add some UI elements.
 
-The peak controls should appear on top of all other elements within the peak show. This will allow users to move between slides with ease. The controls should be injected in a similar order to the one shown below.
+Any HTML element can be turned into a peek control by adding a `data-peek` attribute. The list of default methods currently available to the `data-peek` attribute are listed below.
 
-**Plaintext**
-```
-- peak
-  - controls
-  - slides    
-    - slide
-    - slide
-```
+**Data Peek API**
 
-This would roughly translate to the following markup.
+Method                | Action
+---                   | ---
+`data-peek-toggle `   | Toggles the peek drawer.
+`data-peek-previous`  | Moves to the previous slide.
+`data-peek-next `     | Moves to the next slide.
 
-**Markup**
-```
-- div.peak
-  - div.controls
-  - div.slides
-    - section
-    - section
-```
+**Hotkeys**
 
-Where the controls would consist of *previous slide*, *next slide* and *close peak* buttons. Such that the hierarchy of the peak controls would be as follows.
-
-**Plaintext**
-```
-- controls
-  - previous
-  - close
-  - next
-```
-
-Where this again translates into simple, hassle free markup.
-
-**Markup**
-```
-- div.controls
-  - button.previous
-  - button.close
-  - button.next
-```
-
-The peak show should also be able to receive control through the use of he keyboard keys as this will improve the experience for the end user. The keyboard keys should have the following use cases.
+By default a peek show can also be toggled and navigated using the predefined set of hotkeys listed below.
 
 Key    | Action
 ---    | ---
@@ -115,3 +59,9 @@ Key    | Action
 &darr; | Close
 Spacebar | Next
 Esc    | Close
+
+**URL Hash**
+
+By default the URL hash will be updated when the peek drawer is toggled and when the user navigates from slide to slide. This has the added advantage of adding the users current state to the browser history.
+
+It also allows for navigation to a specific slide within the peek show, provided the end user knows the slide number they wish to view.
