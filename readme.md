@@ -86,7 +86,7 @@ By default the URL hash will be updated when the peek drawer is toggled and when
 
 **Example**
 
-www.example.com/application#**peek=true**#**pslide=1**
+www.example.com/application#peek=true#pslide=1
 
 *Where `peek=true` toggles the drawer to its open state and `pslide=1` sets the current, visible slide to slide one.*
 
