@@ -91,3 +91,17 @@ www.example.com/application#peek=true#pslide=1
 *Where `peek=true` toggles the drawer to its open state and `pslide=1` sets the current, visible slide to slide one.*
 
 This has the added advantage of adding the users current state to the browser history. It also allows for navigation to a specific slide within the peek show, provided the end user knows the slide number they wish to view.
+
+
+## Javascript API
+
+A single global object called `Peek` is exposed.
+
+**Available methods**
+
+Method                | Action
+---                   | ---
+`Peek.toggle()`       | Toggles the peek drawer.
+`Peek.previous()`     | Moves to the previous slide.
+`Peek.next()`         | Moves to the next slide.
+`Peek.isActive()`     | Returns true if active, otherwise false.
