@@ -6,7 +6,7 @@ A framework for creating an application walkthrough in the browser. Here's an ex
 
 #### Markup
 
-```
+```html
 <html>
     <head>
         <link rel="stylesheet" href="css/peak.css">
@@ -42,7 +42,7 @@ The hierarchy of a *peek show* is as follows.
 Which translates into simple, hassle free markup.
 
 #### Markup
-```
+```html
 <div class="peek">
     <div class="slides">
         <section>Slide 1</section>
