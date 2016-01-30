@@ -1,19 +1,37 @@
 
 
-# Peek.js
+# peek.js
 
-Peek is a small javascript package that designers and developers alike can require to provide their users with simple walkthrough tutorials. To add a peek.js walkthrough the following code must be added to the body of the required HTML file.
+A framework for creating an application walkthrough in the browser. Here's an example of the minimum amount of markup required to create a working walkthrough.
+
+#### Markup
 
 ```
-<script src="path/to/peek.js"></script>
-<script>Peek.init();</script>
+<html>
+    <head>
+        <link rel="stylesheet" href="css/peak.css">
+        <link rel="stylesheet" href="css/theme/light.css">
+    </head>
+    <body>
+        <div class="peek">
+            <div class="slides">
+                <section>Slide 1</section>
+                <section>Slide 2</section>
+            </div>
+        </div>
+        <script src="/js/peek.js"></script>
+        <script>
+            Peek.init()
+        </script>
+    </body>
+</html>
 ```
 
 ## Hierarchy
 
-The hierarchy of a peek show should be as follows.
+The hierarchy of a *peek show* is as follows.
 
-**Overview**
+#### Overview
 ```
 - peek
   - slides
@@ -23,25 +41,25 @@ The hierarchy of a peek show should be as follows.
 
 Which translates into simple, hassle free markup.
 
-**HTML**
+#### Markup
 ```
 <div class="peek">
-  <div class="slides">
-    <section></section>
-    <section></section>
-  </div>
+    <div class="slides">
+        <section>Slide 1</section>
+        <section>Slide 2</section>
+    </div>
 </div>
 ```
 
-Each peek walkthrough supports any number of slides, such that a user can simply add a new slide by adding a new HTML `section`. No classes are directly involved with the addition of a single slide, making the experience as simple and pain free as possible.
+Each peek walkthrough supports any number of slides, such that a user can simply add a new slide by adding a new HTML `section`. No classes are directly involved with the addition of a single slide.
 
 ## Controls
 
-To allow your users to navigate the peek show, you will be required to add some UI elements.
+Allows your users to navigate the peek show.
 
 Any HTML element can be turned into a peek control by adding a `data-peek` attribute. The list of default methods currently available to the `data-peek` attribute are listed below.
 
-**Data Peek API**
+#### Data Peek API
 
 Method                | Action
 ---                   | ---
@@ -49,20 +67,27 @@ Method                | Action
 `data-peek-previous`  | Moves to the previous slide.
 `data-peek-next `     | Moves to the next slide.
 
-**Hotkeys**
+#### Hotkeys
 
 By default a peek show can also be toggled and navigated using the predefined set of hotkeys listed below.
 
-Key    | Action
----    | ---
-&larr; | Previous
-&rarr; | Next
-&darr; | Close
-Spacebar | Next
-Esc    | Close
+Key       | Action
+---       | ---
+Ctrl + ?  | Open / Close
+&larr;    | Previous
+&rarr;    | Next
+&darr;    | Close
+Spacebar  | Next
+Esc       | Close
 
-**URL Hash**
+#### URL Hash
 
-By default the URL hash will be updated when the peek drawer is toggled and when the user navigates from slide to slide. This has the added advantage of adding the users current state to the browser history.
+By default the URL hash will be updated when the peek drawer is toggled and when the user navigates from slide to slide.
 
-It also allows for navigation to a specific slide within the peek show, provided the end user knows the slide number they wish to view.
+**Example**
+
+www.example.com/application#**peek=true**#**pslide=1**
+
+*Where `peek=true` toggles the drawer to its open state and `pslide=1` sets the current, visible slide to slide one.*
+
+This has the added advantage of adding the users current state to the browser history. It also allows for navigation to a specific slide within the peek show, provided the end user knows the slide number they wish to view.

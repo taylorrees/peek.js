@@ -11,6 +11,46 @@
 @import url(https://fonts.googleapis.com/css?family=Merriweather:300,300italic,400,400italic,700);
 
 /****************************************************
+ * RESET STYLES
+ ****************************************************/
+
+.peek div, .peek span, .peek applet, .peek object, .peek iframe,
+.peek h1, .peek h2, .peek h3, .peek h4, .peek h5, .peek h6,
+.peek p, .peek blockquote, .peek pre, .peek a, .peek abbr, .peek acronym,
+.peek address, .peek big, .peek cite, .peek code, .peek del, .peek dfn,
+.peek em, .peek img, .peek ins, .peek kbd, .peek q, .peek s, .peek samp,
+.peek small, .peek strike, .peek strong, .peek sub, .peek sup, .peek tt,
+.peek var, .peek b, .peek u, .peek center, .peek dl, .peek dt, .peek dd,
+.peek ol, .peek ul, .peek li, .peek fieldset, .peek form, .peek label,
+.peek legend, .peek table, .peek caption, .peek tbody, .peek tfoot, .peek thead,
+.peek tr, .peek th, .peek td, .peek article, .peek aside, .peek canvas,
+.peek details, .peek embed, .peek figure, .peek figcaption, .peek footer,
+.peek header, .peek hgroup, .peek menu, .peek nav, .peek output, .peek ruby,
+.peek section, .peek summary, .peek time, .peek mark, .peek audio,
+.peek video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.peek section,
+.peek article,
+.peek aside,
+.peek details,
+.peek figcaption,
+.peek figure,
+.peek header,
+.peek footer,
+.peek hgroup,
+.peek menu,
+.peek nav {
+  display: block;
+}
+
+/****************************************************
 * GLOBAL
 ****************************************************/
 
@@ -18,6 +58,7 @@
   font-family: 'Lato', sans-serif;
   font-weight: normal;
   letter-spacing: 0.2px;
+  border-top: 1px solid;
   border-color: rgba(0, 0, 0, 0.05);
   color: rgb(220,220,220);
 }
