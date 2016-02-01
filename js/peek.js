@@ -194,7 +194,7 @@ var Peek = (function() {
       }
     },
 
-    progressBar : function() {
+    setProgress : function() {
       /**
        * Creates the progress bar.
        * Sets the percentage width of the progress bar.
@@ -247,6 +247,80 @@ var Peek = (function() {
       return false;
     },
 
+    getPrevious : function() {
+      /**
+       * @returns {HTMLElement}
+       *
+       * Gets the previous slide and returns it.
+       * Slides class takes the first slide as index 1,
+       * so to retrieve from an array of all slides
+       * we must subtract one from the index.
+       *
+       */
+       var index = Slides.previousSlideIndex;
+       return Slides.allSlides[index - 1];
+    },
+
+    getCurrent : function() {
+      /**
+       * @returns {HTMLElement}
+       *
+       * Gets the current slide and returns it.
+       * Slides class takes the first slide as index 1,
+       * so to retrieve from an array of all slides
+       * we must subtract one from the index.
+       *
+       */
+       var index = Slides.currentSlideIndex;
+       return Slides.allSlides[index - 1];
+    },
+
+    getNext : function() {
+      /**
+       * @return {HTMLElement}
+       *
+       * Gets the next slide and returns it.
+       * Slides class takes the first slide as index 1,
+       * so to retrieve from an array of all slides
+       * we must subtract one from the index.
+       *
+       */
+       var index = Slides.nextSlideIndex;
+       return Slides.allSlides[index - 1];
+    },
+
+    getAll : function() {
+      /**
+       * @return [HTMLElements]
+       *
+       * Gets and returns all the slides in the
+       * current peek show.
+       *
+       */
+
+       return Slides.allSlides;
+    },
+
+    setCurrent : function(index) {
+      /**
+       * @param {integer} index
+       *
+       * A function to set the index of the current slide.
+       * Automatically sets the previous and next slide
+       * relative to the current. You must reinitialise the
+       * peek show once the setCurrent() funtion has been
+       * called using init().
+       *
+       */
+
+      var slides = Slides;
+
+      slides.currentSlideIndex = index;
+      slides.previousSlideIndex = index - 1;
+      slides.nextSlideIndex = index + 1;
+
+    },
+
     toggle : function() {
       /**
        * Toggles the state of the peek drawer (open / closed).
@@ -266,13 +340,17 @@ var Peek = (function() {
     next : function() {
       /**
        * Increments Slide indexes and displays the next slide.
+       * Only if the peek drawer is open.
        *
        */
       var slides = Slides;
-      slides.increment();
-      slides.setLocations();
-      slides.progressBar();
-      utils.addHash('pslide', slides.currentSlideIndex);
+
+      if (Peek.isActive()) {
+        slides.increment();
+        slides.setLocations();
+        slides.setProgress();
+        utils.addHash('pslide', slides.currentSlideIndex);
+      }
     },
 
     previous : function() {
@@ -281,10 +359,13 @@ var Peek = (function() {
        *
        */
       var slides = Slides;
-      slides.decrement();
-      slides.setLocations();
-      slides.progressBar();
-      utils.addHash('pslide', slides.currentSlideIndex);
+
+      if (Peek.isActive()) {
+        slides.decrement();
+        slides.setLocations();
+        slides.setProgress();
+        utils.addHash('pslide', slides.currentSlideIndex);
+      }
     },
 
     bindKeys : function() {
@@ -373,7 +454,7 @@ var Peek = (function() {
       slides.setIndexes();
       slides.setLocations();
       slides.setBackgrounds();
-      slides.progressBar();
+      slides.setProgress();
 
       this.bindKeys();
       this.bindControls();

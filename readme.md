@@ -29,7 +29,7 @@ A framework for creating an application walkthrough in the browser. Here's an ex
 
 ## Hierarchy
 
-The hierarchy of a *peek show* is as follows.
+The hierarchy of a peek walkthrough is as follows.
 
 #### Overview
 ```
@@ -51,7 +51,7 @@ Which translates into simple, hassle free markup.
 </div>
 ```
 
-Each peek walkthrough supports any number of slides, such that a user can simply add a new slide by adding a new HTML `section`. No classes are directly involved with the addition of a single slide.
+Each peek walkthrough supports any number of slides, such that a user can simply add a new slide by adding a new HTML `<section>`. No classes are directly involved with the addition of a single slide.
 
 ## Controls
 
@@ -95,7 +95,7 @@ This has the added advantage of adding the users current state to the browser hi
 
 ## Javascript API
 
-A single global object called `Peek` is exposed.
+A single global object called `Peek` is exposed. The object contains several methods to perform actions on the current peek walkthrough.
 
 **Available methods**
 
@@ -105,3 +105,8 @@ Method                | Action
 `Peek.previous()`     | Moves to the previous slide.
 `Peek.next()`         | Moves to the next slide.
 `Peek.isActive()`     | Returns true if active, otherwise false.
+`Peek.getPrevious()`  | Returns the previous slide element.
+`Peek.getCurrent()`   | Returns the current slide element.
+`Peek.getNext()`      | Returns the next slide element.
+`Peek.getAll()`       | Returns an array of all slide elements.
+`Peek.setCurrent()`   | Sets the current slide.
