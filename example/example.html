@@ -14,8 +14,9 @@
     <button data-peek-toggle>Toggle</button>
     <button data-peek-previous>Previous</button>
     <button data-peek-next>Next</button>
+    <button onclick="make()">Make 2nd</button>
 
-    <div class="peek">
+    <div id="peek1" class="peek">
       <!-- <slides> -->
       <div class="slides">
 
@@ -254,9 +255,74 @@
 
     </div>
 
-    <script type="text/javascript" src="../js/peek.js"></script>
+    <div id="peek2" class="peek">
+      <!-- <slides> -->
+      <div class="slides">
+
+        <section>
+          <article data-layout="dual-text-column">
+
+            <h2>Welcome to peek.</h2>
+            <p>
+              The <a href="#">peak.js</a> plan. Peak will be a small javascript package that designers and developers alike can require to provide their users with simple walkthrough tutorials.
+            </p>
+            <p>
+              To add peak.js the following code must be added to the body of the required HTML file. The hierarchy of a peak show will be as follows.
+            </p>
+
+          </article>
+        </section>
+
+        <section>
+          <article>
+
+            <h1>What is Peek?</h1>
+            <p>
+              The peak.js plan. Peak will be a small javascript package that designers and developers alike can require to provide their users with simple walkthrough tutorials.
+            </p>
+
+          </article>
+        </section>
+
+        <section>
+          <article data-layout="dual-text-column">
+
+            <h2>Welcome to peek.</h2>
+            <p>
+              The <a href="#">peak.js</a> plan. Peak will be a small javascript package that designers and developers alike can require to provide their users with simple walkthrough tutorials.
+            </p>
+            <p>
+              To add peak.js the following code must be added to the body of the required HTML file. The hierarchy of a peak show will be as follows.
+            </p>
+
+          </article>
+        </section>
+
+        <section>
+          <article>
+
+            <h1>What is Peek?</h1>
+            <p>
+              The peak.js plan. Peak will be a small javascript package that designers and developers alike can require to provide their users with simple walkthrough tutorials.
+            </p>
+
+          </article>
+        </section>
+
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../src/peek.js"></script>
     <script type="text/javascript">
-      Peek.init();
+      var peek1 = new Peek(document.getElementById('peek1'));
+      var peek2;
+
+      function make() {
+        peek1.destroy();
+        peek2 = new Peek(document.getElementById('peek2'));
+        peek2.slides.setCurrent(2);
+      }
+
     </script>
 
   </body>

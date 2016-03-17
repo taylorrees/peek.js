@@ -104,9 +104,24 @@ Method                | Action
 `Peek.toggle()`       | Toggles the peek drawer.
 `Peek.previous()`     | Moves to the previous slide.
 `Peek.next()`         | Moves to the next slide.
+`Peek.destroy()`      | Destroys an instance of a walkthrough.
 `Peek.isActive()`     | Returns true if active, otherwise false.
-`Peek.getPrevious()`  | Returns the previous slide element.
-`Peek.getCurrent()`   | Returns the current slide element.
-`Peek.getNext()`      | Returns the next slide element.
-`Peek.getAll()`       | Returns an array of all slide elements.
-`Peek.setCurrent()`   | Sets the current slide.
+`Peek.slides.getIndexes()` | Get previous, current and next slide indexes.
+`Peek.slides.getSize()` | Get the number of slides.
+`Peek.slides.setCurrent(index)` | Sets the index of the current slide.
+
+#### Multiple Walkthrough's
+
+Using the destroy method on an instance of a Peek walkthrough can allow for multiple walkthrough's. An example of how you could implement two walkthrough's is provided below.
+
+```javascript
+var peek1;
+var peek2;
+
+peek1 = new Peek(document.getElementById('peek1'));
+peek1.next();
+peek1.destroy();
+
+peek2 = new Peek(document.getElementById('peek2'));
+peek2.next();
+```
